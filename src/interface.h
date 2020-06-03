@@ -1,10 +1,10 @@
 int mqtt_int; // интервал отправки данных по MQTT в секундах 
 bool stat_led;
 bool toBool(String);
-int Red;
-int Green;
-int Blue;
 int Single;
+uint8_t Red;
+uint8_t Green;
+uint8_t Blue;
 int DMX_ch_r;
 int DMX_ch_g;
 int DMX_ch_b;

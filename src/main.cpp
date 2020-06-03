@@ -12,6 +12,7 @@ void onConnect();
 void led(bool);
 void sendData();
 void led_single(int);
+void showRgb(uint8_t, uint8_t, uint8_t);
 
 
 void setup() {
@@ -32,6 +33,8 @@ void setup() {
 void loop() {
 	jee.handle(); // цикл, необходимый фреймворку
 	led_single(Single);
+	showRgb(Red, Green, Blue);
+	
 }
 
 
