@@ -34,7 +34,7 @@ void setup() {
 void loop() {
 	jee.handle(); // цикл, необходимый фреймворку
 	led(stat_led);
-
+	EXEC_TIMER_SET(1000, Serial.println(MODE););
 }
 
 
