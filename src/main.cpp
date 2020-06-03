@@ -1,4 +1,3 @@
-
 #include <Arduino.h>
 #include "JeeUI2.h" // Подключаем JeeUI2 фреймворк к проекту
 #include "mylib.h"
@@ -6,14 +5,13 @@
 
 jeeui2 jee; // Создаем объект класса для работы с JeeUI2 фреймворком
 
-#define RELAY 4
-
 #include "interface.h"  // в этот файл вынесена работа с параметрами и с веб интерфейсом
 
 void mqttCallback(String topic, String payload);
 void onConnect();
 void led(bool);
 void sendData();
+void led_single(int);
 
 
 void setup() {
@@ -33,8 +31,7 @@ void setup() {
 
 void loop() {
 	jee.handle(); // цикл, необходимый фреймворку
-	led(stat_led);
-	EXEC_TIMER_SET(1000, Serial.println(MODE););
+	led_single(Single);
 }
 
 
