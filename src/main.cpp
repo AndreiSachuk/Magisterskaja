@@ -32,6 +32,7 @@ void setup() {
 
 void loop() {
 	jee.handle(); // цикл, необходимый фреймворку
+	EXEC_TIMER_SET(1000, Serial.println(MODE););
 	led_single(Single);
 	showRgb(Red, Green, Blue);
 	
