@@ -10,6 +10,7 @@ int DMX_ch_g;
 int DMX_ch_b;
 int DMX_ch_s;
 String MODE;
+String MANUAL_MODE;
 
 
 
@@ -43,6 +44,7 @@ void update(){ // функция выполняется после ввода д
   DMX_ch_b = jee.param("DMX_ch_b").toInt();
   DMX_ch_s = jee.param("DMX_ch_s").toInt();
   MODE = jee.param("MODE");
+  MANUAL_MODE = jee.param("MANUAL_MODE");
   
 }
 
@@ -70,6 +72,7 @@ void interface(){ // функция в которой мы формируем в
   jee.range("Red", 0, 255 , 1, "Уровень красного");
   jee.range("Green", 0, 255 , 1, "Уровень зеленого");
   jee.range("Blue", 0, 255 , 1, "Уровень синего");
+  jee.color("Color", "Выберите цвет");
   jee.range("Single", 0, 255 , 1, "Уровень яркости одноцетного канала");
   jee.page();
   
