@@ -1,3 +1,6 @@
+#ifndef LEDS_STAT_H
+#define LEDS_STAT_H
+
 #include <Arduino.h>
 #include <SmartLeds.h>
 
@@ -32,3 +35,6 @@ void led_single(int k){
     ledcAttachPin(ledPin, ledChannel);
 	ledcWrite(ledChannel, k);
 }
+
+
+#endif

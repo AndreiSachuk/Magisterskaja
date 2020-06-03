@@ -1,5 +1,6 @@
-//Таймер Ильи
-// EXEC_TIMER_SET(время, действие;);
+#ifndef MYLIB_H
+#define MYLIB_H
+
 #define COMBINE1(X,Y) X##Y  // helper macro
 #define COMBINE(X,Y) COMBINE1(X,Y)
 #define EXEC_TIMER_SET_NM(Tname,Tafter,Tcode) \
@@ -19,3 +20,5 @@ bool toBool(String s){
   if(s.equals("false")||s.equals("0")||s.equals("FALSE"))return false;
   return false;
 }
+
+#endif

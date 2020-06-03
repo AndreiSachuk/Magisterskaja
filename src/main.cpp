@@ -2,6 +2,7 @@
 #include "JeeUI2.h" // Подключаем JeeUI2 фреймворк к проекту
 #include "mylib.h"
 #include "leds_stat.h"
+#include "modes.h"
 
 jeeui2 jee; // Создаем объект класса для работы с JeeUI2 фреймворком
 
@@ -12,6 +13,7 @@ void onConnect();
 void led(bool);
 void sendData();
 void led_single(int);
+void man_mode(String);
 void showRgb(uint8_t, uint8_t, uint8_t);
 
 
@@ -32,10 +34,9 @@ void setup() {
 
 void loop() {
 	jee.handle(); // цикл, необходимый фреймворку
-	EXEC_TIMER_SET(1000, Serial.println(MODE););
 	led_single(Single);
 	showRgb(Red, Green, Blue);
-	
+	man_mode(MANUAL_MODE);
 }
 
 
