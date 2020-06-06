@@ -8,12 +8,15 @@ bool toBool(String);
 void parameters();
 void update();
 void interface();
+uint32_t hexColorToInt(String);
+
 
 extern uint8_t Red;
 extern uint8_t Green;
 extern uint8_t Blue;
 extern int Single;
 extern String MANUAL_MODE;
+extern String Color;
 
 
 

@@ -4,6 +4,7 @@
 #include <Arduino.h>
 #include "interface.h"
 #include "mylib.h"
+#include <tcs3200.h>
 
 void man_mode(String k){
     if (k=="Resistors"){
@@ -15,7 +16,17 @@ void man_mode(String k){
         Green = map(b, 0, 4095, 0, 255);
         Blue = map(c, 0, 4095, 0, 255);
         Single = map(d, 0, 4095, 0, 255);    
-        EXEC_TIMER_SET(1000, Serial.println(String(Red)+" "+String(Green)+" "+String(Blue)+" "+String(Single)););
+        }
+    if (k=="Color_sensor"){
+        EXEC_TIMER_SET(1000, 
+        {tcs3200 tcs(27, 14, 26, 25, 13);
+        Red = tcs.colorRead('r');
+        Green = tcs.colorRead('g');
+        Blue = tcs.colorRead('b');
+        jee.var("Red", String(Red)); 
+        jee.var("Green", String(Green)); 
+        jee.var("Blue", String(Blue)); };);
+        EXEC_TIMER_SET(500,Serial.println(String(Red)+" "+String(Green)+" "+String(Blue) ););
     }
 
 }

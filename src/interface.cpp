@@ -1,4 +1,6 @@
 #include "interface.h"
+#include "leds_stat.h"
+#include "mylib.h"
 
 int Single;
 uint8_t Red;
@@ -12,13 +14,37 @@ String MODE;
 String MANUAL_MODE;
 int mqtt_int; // интервал отправки данных по MQTT в секундах 
 bool stat_led;
+String Color;
+
+
+#define getColor(r,g,b) (r|g<<8|b<<16)
+#define getColorR(v) (v&0xFF)
+#define getColorG(v) ((v>>8)&0xFF)
+#define getColorB(v) ((v>>16)&0xFF)
+
+uint32_t hexColorToInt(String s){
+    //#ff00ee
+    // 012345
+    if (s.equals("null"))
+    return 0;
+    s = s.substring(1);
+    s.toLowerCase();
+    String hex="0123456789abcdef";
+
+    uint8_t r = (hex.indexOf(s.charAt(0)))*16+hex.indexOf(s.charAt(1));
+    uint8_t g = (hex.indexOf(s.charAt(2)))*16+hex.indexOf(s.charAt(3));
+    uint8_t b = (hex.indexOf(s.charAt(4)))*16+hex.indexOf(s.charAt(5));
+    return getColor(r,g,b);
+}
 
 
 void parameters(){
 // создаем параметры для нашего проекта
   jee.var("wifi", "STA"); // режим работы WiFi по умолчанию ("STA" или "AP")  (параметр в энергонезависимой памяти)
-  jee.var("ssid", "Etereshop_office"); // имя точки доступа к которой подключаемся (параметр в энергонезависимой памяти)
+  jee.var("ssid", "tereshop_office"); // имя точки доступа к которой подключаемся (параметр в энергонезависимой памяти)
   jee.var("pass", "0164f008"); // пароль точки доступа к которой подключаемся (параметр в энергонезависимой памяти)
+
+  jee.var("ap_ssid", "hueta");
 
   jee.var("led", "0"); 
   jee.var("Red", "0"); 
@@ -35,9 +61,6 @@ void parameters(){
 void update(){ // функция выполняется после ввода данных в веб интерфейсе. получение параметров из веб интерфейса в переменные
   // получаем данные в переменную в ОЗУ для дальнейшей работы
   stat_led = toBool(jee.param("led")); // читаем параметр в переменную с переобразованием в нужный тип данных
-  Red = jee.param("Red").toInt();
-  Green = jee.param("Green").toInt();
-  Blue = jee.param("Blue").toInt();
   Single = jee.param("Single").toInt();
   DMX_ch_r = jee.param("DMX_ch_r").toInt();
   DMX_ch_g = jee.param("DMX_ch_g").toInt();
@@ -45,7 +68,14 @@ void update(){ // функция выполняется после ввода д
   DMX_ch_s = jee.param("DMX_ch_s").toInt();
   MODE = jee.param("MODE");
   MANUAL_MODE = jee.param("MANUAL_MODE");
-  
+  Color = jee.param("Color");
+  uint32_t lcolor = hexColorToInt(Color);
+  Red = GET_LAST_CHANGED(uint8_t, jee.param("Red").toInt(), getColorR(lcolor))
+  Green = GET_LAST_CHANGED(uint8_t, jee.param("Green").toInt(), getColorG(lcolor))
+  Blue = GET_LAST_CHANGED(uint8_t, jee.param("Blue").toInt(), getColorB(lcolor))
+  LOG_DEBUG_VARIABLE(Red);
+  LOG_DEBUG_VARIABLE(Green);
+  LOG_DEBUG_VARIABLE(Blue);
 }
 
 void interface(){ // функция в которой мы формируем веб интерфейс и интерфейс в приложении JeeUI2
