@@ -22,6 +22,7 @@ void showRgb(uint8_t, uint8_t, uint8_t);
 
 
 void setup() {
+	//DMX::Initialize();
 	Serial.begin(115200);
 	WiFi.softAPConfig(IPAddress(192,168,20,65), IPAddress(192,168,20,1), IPAddress(255,255,255,0));
 	pinMode(2,OUTPUT);
@@ -34,16 +35,15 @@ void setup() {
 	jee.update(update); // обратный вызов - вызывается при введении данных в веб интерфейс, нужна для сравнения значений пременных с параметрами  (смотрите файл interface.h)
 	jee.begin(true); // Инициализируем JeeUI2 фреймворк. Параметр bool определяет, показывать ли логи работы JeeUI2 (дебаг)
 	update(); // 'этой функцией получаем значения параметров в переменные  (смотрите файл interface.h)
-	
+
 }
 
 
 void loop() {
-	EXEC_TIMER_SET(500,update(););
 	jee.handle(); // цикл, необходимый фреймворку
 	led_single(Single);
 	showRgb(Red, Green, Blue);
-	man_mode(MANUAL_MODE);
+	WORK(MODE);
 }
 
 

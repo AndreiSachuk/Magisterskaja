@@ -5,6 +5,8 @@
 #include "interface.h"
 #include "mylib.h"
 #include <tcs3200.h>
+#include <dmx.h>
+
 
 void man_mode(String k){
     if (k=="Resistors"){
@@ -28,8 +30,32 @@ void man_mode(String k){
         jee.var("Blue", String(Blue)); };);
         EXEC_TIMER_SET(500,Serial.println(String(Red)+" "+String(Green)+" "+String(Blue) ););
     }
-
 }
 
+
+void DMX(){
+if(DMX::IsHealthy()){
+            Red = DMX::Read(DMX_ch_r);
+            Green = DMX::Read(DMX_ch_g);
+            Blue = DMX::Read(DMX_ch_b);
+            Single = DMX::Read(DMX_ch_s);
+        } else {Serial.print("DMX READ FAIL");}
+}
+
+void WORK(String k){
+    if (k=="MANUAL"){
+        man_mode(MANUAL_MODE);
+        EXEC_TIMER_SET(200,update(););
+    } else if (k=="DMX"){
+        //DMX();
+        EXEC_TIMER_SET(200,update(););
+    }
+    else
+    {
+        EXEC_TIMER_SET(1000, Serial.println("not connection"););
+
+    }
+    
+}
 
 #endif

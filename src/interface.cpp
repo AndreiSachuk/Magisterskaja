@@ -6,10 +6,10 @@ int Single;
 uint8_t Red;
 uint8_t Green;
 uint8_t Blue;
-int DMX_ch_r;
-int DMX_ch_g;
-int DMX_ch_b;
-int DMX_ch_s;
+uint8_t DMX_ch_r;
+uint8_t DMX_ch_g;
+uint8_t DMX_ch_b;
+uint8_t DMX_ch_s;
 String MODE;
 String MANUAL_MODE;
 int mqtt_int; // интервал отправки данных по MQTT в секундах 
@@ -40,11 +40,11 @@ uint32_t hexColorToInt(String s){
 
 void parameters(){
 // создаем параметры для нашего проекта
-  jee.var("wifi", "STA"); // режим работы WiFi по умолчанию ("STA" или "AP")  (параметр в энергонезависимой памяти)
-  jee.var("ssid", "tereshop_office"); // имя точки доступа к которой подключаемся (параметр в энергонезависимой памяти)
-  jee.var("pass", "0164f008"); // пароль точки доступа к которой подключаемся (параметр в энергонезависимой памяти)
+  jee.var("wifi", "AP"); // режим работы WiFi по умолчанию ("STA" или "AP")  (параметр в энергонезависимой памяти)
+//  jee.var("ssid", "tereshop_office"); // имя точки доступа к которой подключаемся (параметр в энергонезависимой памяти)
+//  jee.var("pass", "0164f008"); // пароль точки доступа к которой подключаемся (параметр в энергонезависимой памяти)
 
-  jee.var("ap_ssid", "hueta");
+  jee.var("ap_ssid", "AP_Station");
 
   jee.var("led", "0"); 
   jee.var("Red", "0"); 
@@ -68,6 +68,7 @@ void update(){ // функция выполняется после ввода д
   DMX_ch_s = jee.param("DMX_ch_s").toInt();
   MODE = jee.param("MODE");
   MANUAL_MODE = jee.param("MANUAL_MODE");
+
   Color = jee.param("Color");
   uint32_t lcolor = hexColorToInt(Color);
   Red = GET_LAST_CHANGED(uint8_t, jee.param("Red").toInt(), getColorR(lcolor))
@@ -95,7 +96,7 @@ void interface(){ // функция в которой мы формируем в
   jee.option("","");
   jee.option("MANUAL","Ручное управление");
   jee.option("DMX","Управление при помощи DMX консоли");
-  jee.option("MQTT_serv","Упраление через веб страницу и mqtt сервер");
+  jee.option("MQTT_serv","Упраление через веб страницу");
   jee.select("MODE", "Выберете режим управления");
   jee.page();
 
