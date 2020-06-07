@@ -18,8 +18,6 @@ String Color;
 
 
 
-
-
 void parameters(){
 // создаем параметры для нашего проекта
   jee.var("wifi", "STA"); // режим работы WiFi по умолчанию ("STA" или "AP")  (параметр в энергонезависимой памяти)
@@ -43,7 +41,6 @@ void parameters(){
 void update(){ // функция выполняется после ввода данных в веб интерфейсе. получение параметров из веб интерфейса в переменные
   // получаем данные в переменную в ОЗУ для дальнейшей работы
   stat_led = toBool(jee.param("led")); // читаем параметр в переменную с переобразованием в нужный тип данных
-  Single = jee.param("Single").toInt();
   DMX_ch_r = jee.param("DMX_ch_r").toInt();
   DMX_ch_g = jee.param("DMX_ch_g").toInt();
   DMX_ch_b = jee.param("DMX_ch_b").toInt();

@@ -40,12 +40,16 @@ if(DMX::IsHealthy()){
 }
 
 void MQTT(){
+        Single = jee.param("Single").toInt();
+        Color = jee.param("Color");
         uint32_t lcolor = hexColorToInt(Color);
         Red = GET_LAST_CHANGED(uint8_t, jee.param("Red").toInt(), getColorR(lcolor))
         Green = GET_LAST_CHANGED(uint8_t, jee.param("Green").toInt(), getColorG(lcolor))
         Blue = GET_LAST_CHANGED(uint8_t, jee.param("Blue").toInt(), getColorB(lcolor))
-        Color = jee.param("Color");
+
 }
+
+
 
 void WORK(String k){
     if (k.equals("MANUAL")){
