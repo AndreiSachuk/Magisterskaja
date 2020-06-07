@@ -22,7 +22,7 @@ void showRgb(uint8_t, uint8_t, uint8_t);
 
 
 void setup() {
-	//DMX::Initialize();
+	DMX::Initialize();
 	Serial.begin(115200);
 	WiFi.softAPConfig(IPAddress(192,168,20,65), IPAddress(192,168,20,1), IPAddress(255,255,255,0));
 	pinMode(2,OUTPUT);
@@ -42,7 +42,7 @@ void setup() {
 void loop() {
 	jee.handle(); // цикл, необходимый фреймворку
 	led_single(Single);
-	showRgb(Red, Green, Blue);
+	EXEC_TIMER_SET(100,showRgb(Red, Green, Blue); delay(10););
 	WORK(MODE);
 }
 

@@ -9,7 +9,7 @@
 
 
 void man_mode(String k){
-    if (k=="Resistors"){
+    if (k.equals("Resistors")){
         int a = analogRead(25);
         int b = analogRead(26);
         int c = analogRead(27);
@@ -19,16 +19,13 @@ void man_mode(String k){
         Blue = map(c, 0, 4095, 0, 255);
         Single = map(d, 0, 4095, 0, 255);    
         }
-    if (k=="Color_sensor"){
+    if (k.equals("Color_sensor")){
         EXEC_TIMER_SET(1000, 
         {tcs3200 tcs(27, 14, 26, 25, 13);
         Red = tcs.colorRead('r');
         Green = tcs.colorRead('g');
         Blue = tcs.colorRead('b');
-        jee.var("Red", String(Red)); 
-        jee.var("Green", String(Green)); 
-        jee.var("Blue", String(Blue)); };);
-        EXEC_TIMER_SET(500,Serial.println(String(Red)+" "+String(Green)+" "+String(Blue) ););
+        };);
     }
 }
 
@@ -43,13 +40,12 @@ if(DMX::IsHealthy()){
 }
 
 void WORK(String k){
-    if (k=="MANUAL"){
+    if (k.equals("MANUAL")){
         man_mode(MANUAL_MODE);
-        EXEC_TIMER_SET(200,update(););
-    } else if (k=="DMX"){
-        //DMX();
-        EXEC_TIMER_SET(200,update(););
-    }
+      
+    } else if (k.equals("DMX")){
+        DMX();
+          }
     else
     {
         EXEC_TIMER_SET(1000, Serial.println("not connection"););
