@@ -19,6 +19,15 @@
 //Конвертнуть из строки в бул
 bool toBool(String s);
 
+
+//Конвертим #****** в цвета
+#define getColor(r,g,b) (r|g<<8|b<<16)
+#define getColorR(v) (v&0xFF)
+#define getColorG(v) ((v>>8)&0xFF)
+#define getColorB(v) ((v>>16)&0xFF)
+
+uint32_t hexColorToInt(String s);
+
 #define LOG_DEBUG_VARIABLE(VAR_NAME) {Serial.println(String(#VAR_NAME)+":"+String(VAR_NAME));}
 
 #define GET_LAST_CHANGED(TYPE_NAME, IN_X1, IN_X2)\
