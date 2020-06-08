@@ -7,17 +7,16 @@
 #include <tcs3200.h>
 #include <dmx.h>
 
-
 void man_mode(String k){
     if (k.equals("Resistors")){
-        int a = analogRead(25);
-        int b = analogRead(26);
-        int c = analogRead(27);
+        int a = analogRead(34);
+        int b = analogRead(35);
+        int c = analogRead(32);
         int d = analogRead(33);
         Red = map(a, 0, 4095, 0, 255);
         Green = map(b, 0, 4095, 0, 255);
         Blue = map(c, 0, 4095, 0, 255);
-        Single = map(d, 0, 4095, 0, 255);    
+        Single = map(d, 0, 4095, 0, 255);       
         }
     if (k.equals("Color_sensor")){
         EXEC_TIMER_SET(300, 
@@ -28,7 +27,6 @@ void man_mode(String k){
         };);
     }
 }
-
 
 void DMX(){
 if(DMX::IsHealthy()){
@@ -49,8 +47,6 @@ void MQTT(){
 
 }
 
-
-
 void WORK(String k){
     if (k.equals("MANUAL")){
         man_mode(MANUAL_MODE);
@@ -63,10 +59,12 @@ void WORK(String k){
         MQTT();
         EXEC_TIMER_SET(200, update(););
     }
+    else if (k.equals(" ")){
+        EXEC_TIMER_SET(1000, Serial.println("SELECT MODE"););
+    }
     else
     {
         EXEC_TIMER_SET(1000, Serial.println("not connection"););
-
     }
     
 }

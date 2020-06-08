@@ -3,6 +3,7 @@
 
 #include <Arduino.h>
 
+//автотаймер через какое время, что выполнять EXEC_TIMER_SET(Tafter,Tcode)
 #define COMBINE1(X,Y) X##Y  // helper macro
 #define COMBINE(X,Y) COMBINE1(X,Y)
 #define EXEC_TIMER_SET_NM(Tname,Tafter,Tcode) \
@@ -19,7 +20,6 @@
 //Конвертнуть из строки в бул
 bool toBool(String s);
 
-
 //Конвертим #****** в цвета
 #define getColor(r,g,b) (r|g<<8|b<<16)
 #define getColorR(v) (v&0xFF)
@@ -28,8 +28,10 @@ bool toBool(String s);
 
 uint32_t hexColorToInt(String s);
 
+//Вывести в сериал переменную LOG_DEBUG_VARIABLE(VAR_NAME)
 #define LOG_DEBUG_VARIABLE(VAR_NAME) {Serial.println(String(#VAR_NAME)+":"+String(VAR_NAME));}
 
+//ретурнуть последнюю измененную переменную из этих двух, указав их тип
 #define GET_LAST_CHANGED(TYPE_NAME, IN_X1, IN_X2)\
 ([](TYPE_NAME inX1, TYPE_NAME inX2) -> TYPE_NAME {\
   static TYPE_NAME x1 = inX1;\
