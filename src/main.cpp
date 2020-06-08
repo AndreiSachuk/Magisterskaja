@@ -6,15 +6,21 @@
 #include <tcs3200.h> 
 #include <WiFi.h> 
 #include <analogWrite.h>
+#include <SoftwareSerial.h>
 #include "interface.h"  // в этот файл вынесена работа с параметрами и с веб интерфейсом
 
 #define LED_PIN 2
+#define RX 15                        
+#define TX 4                        
 
 
+SoftwareSerial swSer(TX, RX, false, 256);
+byte data[4];  
 jeeui2 jee; // Создаем объект класса для работы с JeeUI2 фреймворком
 
 void mqttCallback(String topic, String payload);
 void onConnect();
+void Radio();
 void led(bool);
 void sendData();
 void led_single(int);
@@ -30,6 +36,7 @@ void setup() {
 	lcd.print("STARTING AP");
 	analogWriteResolution(LED_PIN, 12);
 	Serial.begin(115200);
+	swSer.begin(9600);
 	WiFi.softAPConfig(IPAddress(192,168,8,100), IPAddress(192,168,8,1), IPAddress(255,255,255,0));
 	jee.mqtt("mqtt.by", 1883, "developer", "8kjdtz6d", mqttCallback, onConnect,  true); // суперфункция, обеспечит всю работу с mqtt, последний аргумент - разрешение удаленного управления
 	jee.udp(); // Ответ на UDP запрс. port 4243
@@ -46,8 +53,22 @@ void loop() {
 	jee.handle(); // цикл, необходимый фреймворку
 	analogWrite(LED_PIN, Single);
 	EXEC_TIMER_SET(100,showRgb(Red, Green, Blue); delay(10););
+	EXEC_TIMER_SET(30,Radio(););
 	WORK(MODE);
 }
+
+
+
+void Radio() {                       
+  data[0] = Red;
+  data[1] = Green;
+  data[2] = Blue;
+  data[3] = Single;                      
+  swSer.write(0xAA);              
+  swSer.write(data, sizeof(data));
+  swSer.write('\n');             
+
+}                                   
 
 void onConnect(){ // функция вызывается при подключении к MQTT 
 	// тут пользовательские подписки
