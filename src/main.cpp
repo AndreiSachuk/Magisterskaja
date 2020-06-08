@@ -11,7 +11,6 @@
 #define LED_PIN 2
 
 
-
 jeeui2 jee; // Создаем объект класса для работы с JeeUI2 фреймворком
 
 void mqttCallback(String topic, String payload);
@@ -24,9 +23,14 @@ void showRgb(uint8_t, uint8_t, uint8_t);
 
 void setup() {
 	DMX::Initialize();
+	lcd.begin(16, 4);
+	lcd.setCursor(0,1);
+	lcd.print("STARTING SYSTEM");
+	lcd.setCursor(3,2);
+	lcd.print("STARTING AP");
 	analogWriteResolution(LED_PIN, 12);
 	Serial.begin(115200);
-	WiFi.softAPConfig(IPAddress(192,168,20,65), IPAddress(192,168,20,1), IPAddress(255,255,255,0));
+	WiFi.softAPConfig(IPAddress(192,168,8,100), IPAddress(192,168,8,1), IPAddress(255,255,255,0));
 	jee.mqtt("mqtt.by", 1883, "developer", "8kjdtz6d", mqttCallback, onConnect,  true); // суперфункция, обеспечит всю работу с mqtt, последний аргумент - разрешение удаленного управления
 	jee.udp(); // Ответ на UDP запрс. port 4243
 	jee.led(10, false); // назначаем пин на светодиод, который нам будет говорит о состоянии устройства. (быстро мигает - пытается подключиться к точке доступа, просто горит (или не горит) - подключен к точке доступа, мигает нормально - запущена своя точка доступа)

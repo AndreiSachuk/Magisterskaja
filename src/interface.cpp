@@ -15,6 +15,8 @@ String MANUAL_MODE;
 int mqtt_int; // интервал отправки данных по MQTT в секундах 
 bool stat_led;
 String Color;
+String ap_ssid;
+
 
 void parameters(){
 // создаем параметры для нашего проекта
@@ -41,6 +43,7 @@ void update(){ // функция выполняется после ввода д
   // получаем данные в переменную в ОЗУ для дальнейшей работы
   stat_led = toBool(jee.param("led")); // читаем параметр в переменную с переобразованием в нужный тип данных
   DMX_ch_r = jee.param("DMX_ch_r").toInt();
+  ap_ssid = jee.param("ap_ssid");
   DMX_ch_g = jee.param("DMX_ch_g").toInt();
   DMX_ch_b = jee.param("DMX_ch_b").toInt();
   DMX_ch_s = jee.param("DMX_ch_s").toInt();
@@ -56,7 +59,7 @@ void interface(){ // функция в которой мы формируем в
   jee.menu("Режим работы");
   jee.menu("Настройка ручного режима");
   jee.menu("Настройки каналов DMX");
-  jee.menu("Настройки MQTT режима");
+  jee.menu("Настройки WEB режима");
   jee.menu("Настройки MQTT");
   jee.menu("Настройки Wi-Fi");
   jee.page(); // разделитель между страницами

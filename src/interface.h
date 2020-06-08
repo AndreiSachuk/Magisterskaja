@@ -17,6 +17,8 @@ extern int Single;
 extern String MANUAL_MODE;
 extern String MODE;
 extern String Color;
+extern String ap_ssid;
+
 
 extern uint8_t DMX_ch_r;
 extern uint8_t DMX_ch_g;
