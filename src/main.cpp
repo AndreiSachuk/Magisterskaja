@@ -15,7 +15,7 @@
 
 
 SoftwareSerial swSer(TX, RX, false, 256);
-byte data[4];  
+byte data[5];  
 jeeui2 jee; // Создаем объект класса для работы с JeeUI2 фреймворком
 
 void mqttCallback(String topic, String payload);
@@ -53,21 +53,23 @@ void loop() {
 	jee.handle(); // цикл, необходимый фреймворку
 	analogWrite(LED_PIN, Single);
 	EXEC_TIMER_SET(100,showRgb(Red, Green, Blue); delay(10););
-	EXEC_TIMER_SET(30,Radio(););
+	Radio();
 	WORK(MODE);
 }
 
 
 
 void Radio() {                       
-  data[0] = Red;
-  data[1] = Green;
-  data[2] = Blue;
-  data[3] = Single;                      
-  swSer.write(0xAA);              
-  swSer.write(data, sizeof(data));
-  swSer.write('\n');             
-
+    EXEC_TIMER_SET(100,
+		data[0] = Red;
+		data[1] = Green;
+		data[2] = Blue;
+		data[3] = Single;         
+		swSer.write(0xAA);  
+		swSer.write(0xBB);            
+		swSer.write(data, sizeof(data));
+		swSer.write('\n'); 
+		);       
 }                                   
 
 void onConnect(){ // функция вызывается при подключении к MQTT 
