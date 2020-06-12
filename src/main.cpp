@@ -53,23 +53,21 @@ void loop() {
 	jee.handle(); // цикл, необходимый фреймворку
 	analogWrite(LED_PIN, Single);
 	EXEC_TIMER_SET(100,showRgb(Red, Green, Blue); delay(10););
-	Radio();
+	EXEC_TIMER_SET(100,Radio();)
 	WORK(MODE);
 }
 
 
 
 void Radio() {                       
-    EXEC_TIMER_SET(100,
-		data[0] = Red;
+    	data[0] = Red;
 		data[1] = Green;
 		data[2] = Blue;
 		data[3] = Single;         
 		swSer.write(0xAA);  
 		swSer.write(0xBB);            
 		swSer.write(data, sizeof(data));
-		swSer.write('\n'); 
-		);       
+		swSer.write('\n');        
 }                                   
 
 void onConnect(){ // функция вызывается при подключении к MQTT 
