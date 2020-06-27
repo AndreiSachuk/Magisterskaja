@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include "JeeUI2.h" // Подключаем JeeUI2 фреймворк к проекту
+#include "JeeUI2.h" 
 #include "mylib.h"
 #include "leds_stat.h"
 #include "modes.h"
@@ -7,7 +7,7 @@
 #include <WiFi.h> 
 #include <analogWrite.h>
 #include <SoftwareSerial.h>
-#include "interface.h"  // в этот файл вынесена работа с параметрами и с веб интерфейсом
+#include "interface.h"  
 
 #define LED_PIN 2
 #define RX 15                        
@@ -16,7 +16,7 @@
 
 SoftwareSerial swSer(TX, RX, false, 256);
 byte data[5];  
-jeeui2 jee; // Создаем объект класса для работы с JeeUI2 фреймворком
+jeeui2 jee; 
 
 void mqttCallback(String topic, String payload);
 void onConnect();
@@ -38,15 +38,15 @@ void setup() {
 	Serial.begin(115200);
 	swSer.begin(9600);
 	WiFi.softAPConfig(IPAddress(192,168,8,100), IPAddress(192,168,8,1), IPAddress(255,255,255,0));
-	jee.mqtt("mqtt.by", 1883, "developer", "8kjdtz6d", mqttCallback, onConnect,  true); // суперфункция, обеспечит всю работу с mqtt, последний аргумент - разрешение удаленного управления
-	jee.udp(); // Ответ на UDP запрс. port 4243
-	jee.led(10, false); // назначаем пин на светодиод, который нам будет говорит о состоянии устройства. (быстро мигает - пытается подключиться к точке доступа, просто горит (или не горит) - подключен к точке доступа, мигает нормально - запущена своя точка доступа)
-	jee.ap(5000); // если в течении 20 секунд не удастся подключиться к Точке доступа - запускаем свою (параметр "wifi" сменится с AP на STA)
-	parameters(); // создаем параметры (смотрите файл interface.h)
-	jee.ui(interface); // обратный вызов - интерфейс (смотрите файл interface.h)
-	jee.update(update); // обратный вызов - вызывается при введении данных в веб интерфейс, нужна для сравнения значений пременных с параметрами  (смотрите файл interface.h)
-	jee.begin(true); // Инициализируем JeeUI2 фреймворк. Параметр bool определяет, показывать ли логи работы JeeUI2 (дебаг)
-	update(); // 'этой функцией получаем значения параметров в переменные  (смотрите файл interface.h)
+	jee.mqtt("mqtt.by", 1883, "developer", "8kjdtz6d", mqttCallback, onConnect,  true); 
+	jee.udp(); 
+	jee.led(10, false); 
+	jee.ap(5000); 
+	parameters(); 
+	jee.ui(interface); 
+	jee.update(update); 
+	jee.begin(true); 
+	update(); 
 }
 
 void loop() {
@@ -70,14 +70,11 @@ void Radio() {
 		swSer.write('\n');        
 }                                   
 
-void onConnect(){ // функция вызывается при подключении к MQTT 
-	// тут пользовательские подписки
+void onConnect(){ 
   	Serial.println("Connected to mqtt");
-	//   jee.subscribe("custom"); // подписка на произвольный топик результат - подписка на топик ID/custom
 }
 
-void mqttCallback(String topic, String payload){ // функция вызывается, когда приходят данные MQTT 
-	// тут пользовательская обработка входящих mqtt сообщений
+void mqttCallback(String topic, String payload){ 
   	Serial.println("Message [" + topic + " - " + payload + "] ");
 }
 
